@@ -6,22 +6,22 @@ def check_http host, path
   http.open_timeout = 20
   http.read_timeout = 20
   resp, data = http.get path, nil
-#  unless resp.code == "200"
+  unless resp.code == "200"
     send_mail "Received code #{resp.code} from #{host}"
-#  end
+  end
 end
 
 def send_mail subject
   from = "support@proventustechnologies.com"
-  to = "akramnik@proventustechnologies.com"
 
   msg = <<END_OF_MESSAGE
 From: #{from}
-To: #{to}
+To: #{from}
 Subject: #{subject}
 END_OF_MESSAGE
   Net::SMTP.start('proventustechnologies.com') do |smtp|
-    smtp.send_message msg, from, to
+    smtp.send_message msg, from, "abodner@proventustechnologies.com",
+	"akramnik@proventustechnologies.com"
   end
 end
 
